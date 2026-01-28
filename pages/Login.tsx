@@ -99,10 +99,7 @@ export const Login = () => {
           </Link>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-stone-100 dark:border-stone-700 text-center">
-          <p className="text-xs text-stone-500 mb-2">Demo Credentials (Admin):</p>
-          <code className="text-xs bg-stone-100 dark:bg-stone-900 px-2 py-1 rounded">travelmate@gmail.com / travelmate@2025</code>
-        </div>
+
       </div>
     </div>
   );
