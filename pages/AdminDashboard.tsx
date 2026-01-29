@@ -394,33 +394,35 @@ export const AdminDashboard = () => {
 
     // Main Dashboard
     return (
-        <div className="min-h-screen bg-gradient-to-br from-charcoal-950 via-charcoal-900 to-charcoal-950 text-white pt-24">
+        <div className="min-h-screen bg-gradient-to-br from-charcoal-950 via-charcoal-900 to-charcoal-950 text-white pt-20 md:pt-24">
             {/* Premium Header */}
             <div className="bg-gradient-to-r from-charcoal-900 via-charcoal-800 to-charcoal-900 border-b border-emerald-500/20 shadow-2xl">
-                <div className="max-w-7xl mx-auto px-6 py-6">
-                    <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/50">
-                                <img
-                                    src="/travelmate-logo.png"
-                                    alt="TravelMate"
-                                    className="w-10 h-10 object-contain"
-                                />
-                            </div>
-                            <div>
-                                <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">TravelMate Admin</h1>
-                                <p className="text-charcoal-400 text-sm">Content Management System</p>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 md:py-6">
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div className="flex items-center gap-4 w-full md:w-auto justify-between md:justify-start">
+                            <div className="flex items-center gap-4">
+                                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/50">
+                                    <img
+                                        src="/travelmate-logo.png"
+                                        alt="TravelMate"
+                                        className="w-8 h-8 md:w-10 md:h-10 object-contain"
+                                    />
+                                </div>
+                                <div>
+                                    <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">TravelMate Admin</h1>
+                                    <p className="text-charcoal-400 text-xs md:text-sm">Content Management System</p>
+                                </div>
                             </div>
                         </div>
-                        <div className="flex gap-4 items-center">
-                            <div className="text-right">
-                                <p className="text-sm text-charcoal-400">Logged in as</p>
-                                <p className="font-semibold text-emerald-400">{user?.email}</p>
+                        <div className="flex gap-4 items-center w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 border-white/5 pt-4 md:pt-0">
+                            <div className="text-right flex-1 md:flex-none">
+                                <p className="text-xs md:text-sm text-charcoal-400">Logged in as</p>
+                                <p className="font-semibold text-emerald-400 text-sm md:text-base truncate max-w-[150px] md:max-w-none">{user?.email}</p>
                             </div>
                             <Button
                                 size="sm"
                                 onClick={handleLogout}
-                                className="!bg-gradient-to-r !from-red-500 !to-red-600 hover:!from-red-600 hover:!to-red-700 !shadow-lg !shadow-red-500/30"
+                                className="!bg-gradient-to-r !from-red-500 !to-red-600 hover:!from-red-600 hover:!to-red-700 !shadow-lg !shadow-red-500/30 whitespace-nowrap"
                             >
                                 Logout
                             </Button>
@@ -430,13 +432,13 @@ export const AdminDashboard = () => {
             </div>
 
             {/* Premium Tabs */}
-            <div className="bg-gradient-to-r from-charcoal-900 via-charcoal-800 to-charcoal-900 border-b border-white/10 shadow-lg">
-                <div className="max-w-7xl mx-auto flex gap-2 p-4 overflow-x-auto">
+            <div className="sticky top-16 z-30 bg-gradient-to-r from-charcoal-900 via-charcoal-800 to-charcoal-900 border-b border-white/10 shadow-lg">
+                <div className="max-w-7xl mx-auto flex gap-2 p-2 md:p-4 overflow-x-auto no-scrollbar mask-gradient-x">
                     {['overview', 'users', 'bookings', 'trip-requests', 'destinations', 'services', 'faqs', 'blogs', 'reviews', 'contacts', 'newsletter', 'settings'].map(tab => (
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`px-6 py-3 rounded-xl whitespace-nowrap transition-all duration-300 font-semibold text-sm ${activeTab === tab
+                            className={`px-4 md:px-6 py-2 md:py-3 rounded-xl whitespace-nowrap transition-all duration-300 font-semibold text-xs md:text-sm flex-shrink-0 ${activeTab === tab
                                 ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg shadow-emerald-500/50 scale-105'
                                 : 'bg-charcoal-800/50 text-charcoal-300 hover:bg-charcoal-700 hover:text-white border border-charcoal-700/50'}`}
                         >
@@ -447,14 +449,14 @@ export const AdminDashboard = () => {
             </div>
 
             {/* Content */}
-            <div className="max-w-7xl mx-auto p-6">
+            <div className="max-w-7xl mx-auto p-4 md:p-6 pb-20">
                 {loading && <DashboardLoadingSkeleton />}
 
                 {/* Overview Tab */}
                 {activeTab === 'overview' && (
                     <div className="space-y-6">
-                        <h2 className="text-2xl font-bold">Dashboard Overview</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <h2 className="text-xl md:text-2xl font-bold">Dashboard Overview</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                             <StatCard
                                 title="Total Users"
                                 value={stats.totalUsers}
@@ -492,45 +494,45 @@ export const AdminDashboard = () => {
                         </div>
 
                         {/* Additional Stats Row */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                             <StatCard
-                                title="Newsletter Subscribers"
+                                title="Newsletter"
                                 value={newsletterSubscribers.length}
                                 icon={<Mail className="w-6 h-6" />}
                                 color="pink"
                                 trend={{ value: 20, isPositive: true }}
                                 action={{
-                                    label: "View Subscribers",
+                                    label: "View",
                                     onClick: () => setActiveTab('newsletter')
                                 }}
                             />
                             <StatCard
-                                title="Contact Messages"
+                                title="Messages"
                                 value={contactMessages.length}
                                 icon={<MessageSquare className="w-6 h-6" />}
                                 color="blue"
                                 action={{
-                                    label: "View Messages",
+                                    label: "View",
                                     onClick: () => setActiveTab('contacts')
                                 }}
                             />
                             <StatCard
-                                title="Blog Posts"
+                                title="Blogs"
                                 value={blogs.length}
                                 icon={<Briefcase className="w-6 h-6" />}
                                 color="emerald"
                                 action={{
-                                    label: "Manage Blogs",
+                                    label: "Manage",
                                     onClick: () => setActiveTab('blogs')
                                 }}
                             />
                             <StatCard
-                                title="Total Reviews"
+                                title="Reviews"
                                 value={reviews.length}
                                 icon={<TrendingUp className="w-6 h-6" />}
                                 color="purple"
                                 action={{
-                                    label: "View Reviews",
+                                    label: "View",
                                     onClick: () => setActiveTab('reviews')
                                 }}
                             />
@@ -620,40 +622,42 @@ export const AdminDashboard = () => {
                 {activeTab === 'users' && (
                     <div className="space-y-4">
                         <h2 className="text-2xl font-bold">User Management ({users.length})</h2>
-                        <div className="bg-charcoal-900 rounded-xl border border-white/10 overflow-hidden">
-                            <table className="w-full">
-                                <thead className="bg-charcoal-800">
-                                    <tr>
-                                        <th className="text-left p-4">Email</th>
-                                        <th className="text-left p-4">Name</th>
-                                        <th className="text-left p-4">Role</th>
-                                        <th className="text-left p-4">Created</th>
-                                        <th className="text-left p-4">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {users.map(u => (
-                                        <tr key={u.id} className="border-t border-white/5">
-                                            <td className="p-4">{u.email}</td>
-                                            <td className="p-4">{u.full_name || 'N/A'}</td>
-                                            <td className="p-4">
-                                                <select
-                                                    value={u.role || 'user'}
-                                                    onChange={(e) => handleChangeRole(u.id, e.target.value)}
-                                                    className="bg-charcoal-800 px-2 py-1 rounded"
-                                                >
-                                                    <option value="user">User</option>
-                                                    <option value="admin">Admin</option>
-                                                </select>
-                                            </td>
-                                            <td className="p-4">{new Date(u.created_at).toLocaleDateString()}</td>
-                                            <td className="p-4">
-                                                <button onClick={() => handleDeleteUser(u.id)} className="text-red-400 hover:text-red-300">Delete</button>
-                                            </td>
+                        <div className="bg-charcoal-900 rounded-xl border border-white/10 overflow-hidden shadow-xl">
+                            <div className="overflow-x-auto">
+                                <table className="w-full min-w-[600px]">
+                                    <thead className="bg-charcoal-800">
+                                        <tr>
+                                            <th className="text-left p-4 text-stone-300 font-semibold">Email</th>
+                                            <th className="text-left p-4 text-stone-300 font-semibold">Name</th>
+                                            <th className="text-left p-4 text-stone-300 font-semibold">Role</th>
+                                            <th className="text-left p-4 text-stone-300 font-semibold">Created</th>
+                                            <th className="text-left p-4 text-stone-300 font-semibold">Actions</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {users.map(u => (
+                                            <tr key={u.id} className="border-t border-white/5 hover:bg-white/5 transition-colors">
+                                                <td className="p-4">{u.email}</td>
+                                                <td className="p-4 font-medium">{u.full_name || 'N/A'}</td>
+                                                <td className="p-4">
+                                                    <select
+                                                        value={u.role || 'user'}
+                                                        onChange={(e) => handleChangeRole(u.id, e.target.value)}
+                                                        className="bg-charcoal-950 px-3 py-1.5 rounded-lg border border-white/10 text-sm focus:border-emerald-500 outline-none"
+                                                    >
+                                                        <option value="user">User</option>
+                                                        <option value="admin">Admin</option>
+                                                    </select>
+                                                </td>
+                                                <td className="p-4 text-stone-400">{new Date(u.created_at).toLocaleDateString()}</td>
+                                                <td className="p-4">
+                                                    <button onClick={() => handleDeleteUser(u.id)} className="text-red-400 hover:text-red-300 font-medium text-sm px-3 py-1 hover:bg-red-500/10 rounded-lg transition-colors">Delete</button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 )}
