@@ -37,6 +37,7 @@ const MyTripsPage = lazy(() => import('./pages/MyTripsPage').then(module => ({ d
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword').then(module => ({ default: module.ForgotPassword })));
 const ResetPassword = lazy(() => import('./pages/ResetPassword').then(module => ({ default: module.ResetPassword })));
 const Sitemap = lazy(() => import('./pages/Sitemap').then(module => ({ default: module.Sitemap })));
+const HowItWorksPage = lazy(() => import('./pages/HowItWorksPage').then(module => ({ default: module.HowItWorksPage })));
 
 // Loading Component
 const PageLoader = () => (
@@ -85,6 +86,7 @@ const App = () => {
                       <Route path="/forgot-password" element={<ForgotPassword />} />
                       <Route path="/reset-password" element={<ResetPassword />} />
                       <Route path="/sitemap" element={<Sitemap />} />
+                      <Route path="/how-it-works" element={<HowItWorksPage />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </Suspense>

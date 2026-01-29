@@ -5,6 +5,7 @@ import { Button } from '../components/Button';
 import { Blog, Destination } from '../types';
 
 import { SEO } from '../components/SEO';
+import { HowItWorks } from '../components/HowItWorks';
 
 export const Home = () => {
   // ... existing hooks ...
@@ -135,6 +136,9 @@ export const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* ----------------- HOW IT WORKS ----------------- */}
+      <HowItWorks />
 
       {/* ----------------- FEATURES GRID ----------------- */}
       <section className="py-32 bg-sand-50 dark:bg-charcoal-950 relative">
