@@ -9,6 +9,8 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { NotFound } from './pages/NotFound';
 import { OfflineNotice } from './components/OfflineNotice';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { HelmetProvider } from 'react-helmet-async';
+import { ScrollToTop } from './components/ScrollToTop';
 
 // Lazy Load Pages
 const Home = lazy(() => import('./pages/Home').then(module => ({ default: module.Home })));
@@ -34,6 +36,7 @@ const Profile = lazy(() => import('./pages/Profile').then(module => ({ default: 
 const MyTripsPage = lazy(() => import('./pages/MyTripsPage').then(module => ({ default: module.MyTripsPage })));
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword').then(module => ({ default: module.ForgotPassword })));
 const ResetPassword = lazy(() => import('./pages/ResetPassword').then(module => ({ default: module.ResetPassword })));
+const Sitemap = lazy(() => import('./pages/Sitemap').then(module => ({ default: module.Sitemap })));
 
 // Loading Component
 const PageLoader = () => (
@@ -42,10 +45,6 @@ const PageLoader = () => (
   </div>
 );
 
-import { HelmetProvider } from 'react-helmet-async';
-
-// ... (previous imports)
-
 const App = () => {
   return (
     <HelmetProvider>
@@ -53,6 +52,7 @@ const App = () => {
         <AuthProvider>
           <AppProvider>
             <Router>
+              <ScrollToTop />
               <div className="flex flex-col min-h-screen bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 transition-colors font-sans">
                 <OfflineNotice />
                 <Navbar />
@@ -60,9 +60,9 @@ const App = () => {
                   <Suspense fallback={<PageLoader />}>
                     <Routes>
                       <Route path="/" element={<Home />} />
-                      <Route path="/plan" element={<TravelForm />} />
-                      <Route path="/result" element={<TripResult />} />
-                      <Route path="/trip/share/:shareId" element={<TripResult />} />
+                      <Route path="/plan" element={<ProtectedRoute><TravelForm /></ProtectedRoute>} />
+                      <Route path="/result" element={<ProtectedRoute><TripResult /></ProtectedRoute>} />
+                      <Route path="/trip/share/:shareId" element={<ProtectedRoute><TripResult /></ProtectedRoute>} />
                       <Route path="/my-trips" element={<ProtectedRoute><MyTripsPage /></ProtectedRoute>} />
                       <Route path="/community" element={<Community />} />
                       <Route path="/profile/:userId" element={<PublicProfile />} />
@@ -84,6 +84,7 @@ const App = () => {
                       <Route path="/my-trips" element={<MyTripsPage />} />
                       <Route path="/forgot-password" element={<ForgotPassword />} />
                       <Route path="/reset-password" element={<ResetPassword />} />
+                      <Route path="/sitemap" element={<Sitemap />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </Suspense>

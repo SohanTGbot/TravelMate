@@ -165,15 +165,18 @@ export const Navbar = () => {
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`fixed top-0 right-0 z-[70] w-3/4 max-w-sm h-full bg-white dark:bg-charcoal-900 shadow-2xl transition-transform duration-300 ease-out transform md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed top-0 right-0 z-[70] w-4/5 max-w-sm h-full bg-white/95 dark:bg-charcoal-900/95 backdrop-blur-xl shadow-2xl transition-transform duration-300 ease-out transform md:hidden border-l border-white/20 dark:border-white/5 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
         <div className="flex flex-col h-full overflow-y-auto">
           <div className="p-6 flex justify-between items-center border-b border-sand-200 dark:border-charcoal-800">
-            <span className="text-xl font-display font-bold text-charcoal-900 dark:text-white">Menu</span>
+            <span className="text-xl font-display font-bold text-charcoal-900 dark:text-white flex items-center gap-2">
+              <span className="w-2 h-8 bg-forest-500 rounded-full"></span>
+              Menu
+            </span>
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="p-2 rounded-full hover:bg-sand-100 dark:hover:bg-charcoal-800 text-charcoal-500 dark:text-sand-400"
+              className="p-2.5 rounded-full hover:bg-sand-100 dark:hover:bg-charcoal-800 text-charcoal-500 dark:text-sand-400 transition-colors"
               aria-label="Close menu"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -182,91 +185,99 @@ export const Navbar = () => {
             </button>
           </div>
 
-          <div className="p-6 flex-grow space-y-2">
+          <div className="p-6 flex-grow flex flex-col gap-2">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
                 onClick={() => setIsMenuOpen(false)}
-                className={`block px-4 py-3 rounded-xl text-lg font-medium transition-all ${location.pathname === link.path
-                  ? 'bg-forest-50 dark:bg-forest-900/20 text-forest-700 dark:text-forest-200'
-                  : 'text-charcoal-600 dark:text-sand-300 hover:bg-sand-50 dark:hover:bg-charcoal-800'
+                className={`flex items-center justify-between px-5 py-3.5 rounded-2xl text-lg font-medium transition-all group ${location.pathname === link.path
+                  ? 'bg-forest-50 dark:bg-forest-900/20 text-forest-700 dark:text-forest-200 shadow-sm border border-forest-100 dark:border-forest-900/30'
+                  : 'text-charcoal-600 dark:text-sand-300 hover:bg-sand-50 dark:hover:bg-charcoal-800 hover:pl-6'
                   }`}
               >
                 {link.name}
+                {location.pathname === link.path && <span className="w-1.5 h-1.5 rounded-full bg-forest-500"></span>}
               </Link>
             ))}
+
+            <div className="my-6 border-t border-dashed border-sand-300 dark:border-charcoal-700 mx-2"></div>
 
             {/* Plan Trip CTA for Mobile */}
             <Link
               to="/plan"
               onClick={() => setIsMenuOpen(false)}
-              className="block px-4 py-3 rounded-xl text-lg font-bold text-forest-700 dark:text-forest-400 bg-forest-50/50 dark:bg-forest-900/10 hover:bg-forest-100 dark:hover:bg-forest-900/30 transition-all mt-2"
+              className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl font-bold text-white bg-gradient-to-r from-forest-600 to-forest-500 shadow-lg shadow-forest-500/20 hover:scale-[1.02] transition-all"
             >
-              ✨ Plan a Trip
+              <span>✨</span>
+              Plan a Trip
             </Link>
 
             {user?.role === 'admin' && (
               <Link
                 to="/admin"
                 onClick={() => setIsMenuOpen(false)}
-                className="block px-4 py-3 rounded-xl text-lg font-bold text-charcoal-600 dark:text-charcoal-400 hover:bg-sand-50 dark:hover:bg-charcoal-800 transition-all mt-1"
+                className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl font-bold text-charcoal-600 dark:text-sand-200 border border-sand-200 dark:border-charcoal-700 hover:bg-sand-50 dark:hover:bg-charcoal-800 transition-all"
               >
                 🛡️ Admin Panel
               </Link>
             )}
 
-            <div className="my-4 border-t border-sand-200 dark:border-charcoal-800"></div>
-
-            {!user ? (
-              <div className="space-y-3">
-                <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="outline" className="w-full justify-center">Log In</Button>
-                </Link>
-                <Link to="/register" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="primary" className="w-full justify-center">Sign Up Free</Button>
-                </Link>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 px-4 py-2">
-                  <div className="w-10 h-10 rounded-full bg-forest-600 text-white flex items-center justify-center font-bold">
-                    {user.avatar_url ? (
-                      <img src={user.avatar_url} alt={user.name} className="w-full h-full object-cover rounded-full" />
-                    ) : (
-                      user.name.charAt(0)
-                    )}
+            <div className="mt-auto pt-6">
+              {!user ? (
+                <div className="space-y-3 bg-sand-50 dark:bg-charcoal-800/50 p-4 rounded-2xl border border-sand-100 dark:border-charcoal-700">
+                  <div className="text-center mb-2 text-sm text-charcoal-500 dark:text-charcoal-400">Join the community</div>
+                  <Link to="/login" onClick={() => setIsMenuOpen(false)} className="block">
+                    <Button variant="outline" className="w-full justify-center bg-white dark:bg-charcoal-800">Log In</Button>
+                  </Link>
+                  <Link to="/register" onClick={() => setIsMenuOpen(false)} className="block">
+                    <Button variant="primary" className="w-full justify-center shadow-md">Sign Up Free</Button>
+                  </Link>
+                </div>
+              ) : (
+                <div className="space-y-4 bg-sand-50 dark:bg-charcoal-800/50 p-5 rounded-3xl border border-sand-100 dark:border-charcoal-700">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-forest-500 to-teal-400 text-white flex items-center justify-center text-lg font-bold shadow-md">
+                      {user.avatar_url ? (
+                        <img src={user.avatar_url} alt={user.name || 'User'} className="w-full h-full object-cover rounded-full" />
+                      ) : (
+                        (user.name?.charAt(0) || 'U')
+                      )}
+                    </div>
+                    <div className="overflow-hidden">
+                      <div className="font-bold text-charcoal-900 dark:text-white truncate text-lg">{user.name || 'Traveler'}</div>
+                      <div className="text-xs text-charcoal-500 dark:text-charcoal-400 truncate opacity-80">{user.email}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="font-bold text-charcoal-900 dark:text-white">{user.name}</div>
-                    <div className="text-xs text-charcoal-500 dark:text-charcoal-400 truncate max-w-[150px]">{user.email}</div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
+                      <Button variant="outline" className="w-full justify-center text-xs h-10 border-sand-200 dark:border-charcoal-600 bg-white dark:bg-charcoal-800">Profile</Button>
+                    </Link>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-center text-xs h-10 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 hover:text-red-600"
+                      onClick={() => { logout(); setIsMenuOpen(false); }}
+                    >
+                      Log Out
+                    </Button>
                   </div>
                 </div>
-                <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="outline" className="w-full justify-center">View Profile</Button>
-                </Link>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-center text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
-                  onClick={() => { logout(); setIsMenuOpen(false); }}
-                >
-                  Log Out
-                </Button>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
 
-          <div className="p-6 border-t border-sand-200 dark:border-charcoal-800">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-charcoal-500 dark:text-charcoal-400">Appearance</span>
+            <div className="flex justify-between items-center px-2 py-4 mt-2">
+              <span className="text-xs font-bold text-charcoal-400 uppercase tracking-widest">Theme</span>
               <button
                 onClick={toggleTheme}
-                className="p-3 rounded-full bg-sand-100 dark:bg-charcoal-800 text-charcoal-700 dark:text-sand-200 transition-colors"
-                aria-label="Toggle Theme"
+                className="relative inline-flex h-8 w-14 items-center rounded-full bg-sand-200 dark:bg-charcoal-700 transition-colors focus:outline-none"
               >
-                {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
+                <span className={`${theme === 'light' ? 'translate-x-1' : 'translate-x-7'} inline-block h-6 w-6 transform rounded-full bg-white shadow-sm transition-transform duration-200 flex items-center justify-center text-[10px]`}>
+                  {theme === 'light' ? '☀️' : '🌙'}
+                </span>
               </button>
             </div>
+
           </div>
         </div>
       </div>
