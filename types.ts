@@ -150,6 +150,8 @@ export interface TripPlan {
   };
   isPublic?: boolean;
   shareId?: string;
+  tags?: string[];
+  interests?: string[];
 }
 
 export interface User {

@@ -332,7 +332,7 @@ export const TripResult = () => {
                                 <Button variant="outline" onClick={handleSaveOffline}>
                                     <span className="mr-2">⬇️</span> Offline
                                 </Button>
-                                {isOwner ? (
+                                {(!shareId || isOwner) ? (
                                     <Button variant="primary" onClick={handleSaveTrip} isLoading={isSaving}>Save Trip</Button>
                                 ) : (
                                     <Button variant="primary" onClick={handleDownloadHTML}>Download Copy</Button>

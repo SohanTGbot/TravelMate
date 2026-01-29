@@ -7,6 +7,7 @@ import { Button } from '../components/Button';
 import { ImageUpload } from '../components/ImageUpload';
 import { documentService } from '../services/documentService';
 import { UserDocument } from '../types';
+import { GAMIFICATION } from '../utils/gamification';
 
 export const Profile = () => {
   const { user, isLoadingAuth, refreshUser } = useAppContext();
@@ -42,7 +43,8 @@ export const Profile = () => {
   });
 
   // Active tab
-  const [activeTab, setActiveTab] = useState<'overview' | 'security' | 'documents' | 'preferences'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'security' | 'documents' | 'preferences' | 'achievements'>('overview');
+
 
   useEffect(() => {
     if (!isLoadingAuth && !user) {
@@ -232,6 +234,7 @@ export const Profile = () => {
     { id: 'overview', label: 'Overview', icon: '👤' },
     { id: 'security', label: 'Security', icon: '🔒' },
     { id: 'documents', label: 'Documents', icon: '📂' },
+    { id: 'achievements', label: 'Passport & Badges', icon: '🏆' },
     { id: 'preferences', label: 'Preferences', icon: '⚙️' }
   ];
 
@@ -355,8 +358,8 @@ export const Profile = () => {
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as any)}
                     className={`px-6 py-3 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 ${activeTab === tab.id
-                        ? 'bg-gradient-to-r from-forest-500 to-forest-700 text-white shadow-lg scale-105'
-                        : 'text-charcoal-600 dark:text-sand-300 hover:bg-sand-50 dark:hover:bg-charcoal-800'
+                      ? 'bg-gradient-to-r from-forest-500 to-forest-700 text-white shadow-lg scale-105'
+                      : 'text-charcoal-600 dark:text-sand-300 hover:bg-sand-50 dark:hover:bg-charcoal-800'
                       }`}
                   >
                     <span className="text-xl">{tab.icon}</span>
@@ -647,6 +650,67 @@ export const Profile = () => {
                 </div>
               </div>
             )}
+
+            {/* Achievements Tab (Passport & Badges) */}
+            {activeTab === 'achievements' && (
+              <div className="space-y-8">
+                {/* Badges Section */}
+                <div className="bg-white dark:bg-charcoal-900 rounded-[2rem] p-8 shadow-lg border border-sand-200 dark:border-charcoal-700">
+                  <h2 className="text-2xl font-bold text-charcoal-900 dark:text-white mb-6 font-display flex items-center gap-2">
+                    <span>🏆</span> Travel Badges
+                  </h2>
+                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                    {GAMIFICATION.getBadges(user).map(badge => (
+                      <div
+                        key={badge.id}
+                        className={`p-4 rounded-2xl border text-center transition-all ${badge.earned
+                          ? `bg-gradient-to-br ${badge.color} text-white border-transparent shadow-lg transform hover:scale-105`
+                          : 'bg-sand-50 dark:bg-charcoal-800 border-sand-200 dark:border-charcoal-700 opacity-60 grayscale'
+                          }`}
+                      >
+                        <div className="text-4xl mb-2">{badge.icon}</div>
+                        <h3 className={`font-bold text-sm mb-1 ${badge.earned ? 'text-white' : 'text-charcoal-700 dark:text-sand-300'}`}>{badge.name}</h3>
+                        <p className={`text-xs leading-tight ${badge.earned ? 'text-white/90' : 'text-charcoal-500 dark:text-charcoal-400'}`}>{badge.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Passport Section */}
+                <div className="bg-forest-900 dark:bg-charcoal-900 rounded-[2rem] p-8 shadow-2xl border-4 border-forest-800 dark:border-charcoal-700 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/leather.png')] opacity-20"></div>
+                  <div className="relative z-10">
+                    <div className="flex justify-between items-center mb-8 border-b border-forest-700 pb-4">
+                      <h2 className="text-3xl font-bold text-sand-100 font-display flex items-center gap-3">
+                        <span className="text-4xl">🛂</span> Travel Passport
+                      </h2>
+                      <div className="text-forest-300 font-mono text-xs md:text-sm">
+                        ID: {user.id.substring(0, 8).toUpperCase()}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                      {GAMIFICATION.getPassportStamps(user).length > 0 ? (
+                        GAMIFICATION.getPassportStamps(user).map(stamp => (
+                          <div key={stamp.id} className="aspect-square bg-sand-100 rounded-full border-4 border-dashed border-forest-700/50 flex flex-col items-center justify-center p-2 transform rotate-[-6deg] hover:rotate-0 transition-transform cursor-pointer shadow-lg hover:shadow-xl group">
+                            <div className="text-center">
+                              <div className="text-forest-900 font-bold text-xs uppercase tracking-widest mb-1 group-hover:text-forest-700">VISITED</div>
+                              <div className="text-forest-800 font-black text-sm md:text-lg leading-none mb-1">{stamp.city}</div>
+                              <div className="text-forest-600 text-[10px] font-mono">{stamp.date}</div>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="col-span-full py-12 text-center text-forest-300/50 italic">
+                          No stamps yet. Plan a trip to get your first stamp!
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
           </div>
         </div>
       </div>
