@@ -17,6 +17,25 @@ const CURRENCIES = ["INR - ₹", "USD - $", "EUR - €", "GBP - £", "JPY - ¥"]
 const LANGUAGES = ["English", "Bengali", "Hindi", "Spanish", "French", "German"];
 const INTERESTS = ["Nature", "History", "Food", "Adventure", "Relaxation", "Nightlife", "Shopping", "Culture"];
 
+const RadioCard = ({ label, subLabel, value, groupValue, onClick, icon }: any) => {
+  const isSelected = groupValue === value;
+  return (
+    <div
+      onClick={onClick}
+      className={`relative p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col items-center text-center gap-2 group ${isSelected
+        ? 'border-forest-500 bg-forest-50 dark:bg-forest-900/20 shadow-lg shadow-forest-500/10 ring-1 ring-forest-500'
+        : 'border-sand-200 dark:border-charcoal-700 bg-white/50 dark:bg-charcoal-800/50 hover:border-forest-300 dark:hover:border-forest-600 hover:scale-[1.02]'
+        }`}
+    >
+      <div className={`text-2xl mb-1 transition-transform duration-300 ${isSelected ? 'scale-110' : 'group-hover:scale-110'}`}>{icon}</div>
+      <div>
+        <div className={`font-bold text-sm ${isSelected ? 'text-forest-900 dark:text-white' : 'text-charcoal-700 dark:text-sand-200'}`}>{label}</div>
+        <div className="text-xs text-charcoal-500 dark:text-charcoal-400 mt-1">{subLabel}</div>
+      </div>
+    </div>
+  );
+};
+
 export const TravelForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -187,29 +206,10 @@ export const TravelForm = () => {
     });
   };
 
-  // --- SUB-COMPONENTS ---
-  const RadioCard = ({ label, subLabel, value, groupValue, onClick, icon }: any) => {
-    const isSelected = groupValue === value;
-    return (
-      <div
-        onClick={onClick}
-        className={`relative p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex flex-col items-center text-center gap-2 group ${isSelected
-          ? 'border-forest-500 bg-forest-50 dark:bg-forest-900/20 shadow-lg shadow-forest-500/10 ring-1 ring-forest-500'
-          : 'border-sand-200 dark:border-charcoal-700 bg-white/50 dark:bg-charcoal-800/50 hover:border-forest-300 dark:hover:border-forest-600 hover:scale-[1.02]'
-          }`}
-      >
-        <div className={`text-2xl mb-1 transition-transform duration-300 ${isSelected ? 'scale-110' : 'group-hover:scale-110'}`}>{icon}</div>
-        <div>
-          <div className={`font-bold text-sm ${isSelected ? 'text-forest-900 dark:text-white' : 'text-charcoal-700 dark:text-sand-200'}`}>{label}</div>
-          <div className="text-xs text-charcoal-500 dark:text-charcoal-400 mt-1">{subLabel}</div>
-        </div>
-      </div>
-    );
-  };
-
   const labelClasses = "flex items-center gap-2 text-xs font-bold text-charcoal-500 dark:text-sand-400 uppercase tracking-wider mb-2 ml-1";
   const selectClasses = "w-full bg-sand-50 dark:bg-charcoal-800 border-none rounded-xl px-4 py-3.5 text-charcoal-900 dark:text-white focus:ring-2 focus:ring-forest-500 cursor-pointer appearance-none font-medium";
   const inputClasses = "w-full bg-sand-50 dark:bg-charcoal-800 border-none rounded-xl px-4 py-3.5 text-charcoal-900 dark:text-white focus:ring-2 focus:ring-forest-500 font-medium placeholder-charcoal-300 dark:placeholder-charcoal-600";
+
 
   return (
     <div className="min-h-screen bg-sand-100 dark:bg-charcoal-950 flex justify-center py-24 px-4 relative overflow-hidden transition-colors duration-500">
@@ -365,7 +365,7 @@ export const TravelForm = () => {
                 The Basics
               </h3>
 
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="col-span-2">
                   <label className={labelClasses}>
                     <svg className="w-4 h-4 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
@@ -414,7 +414,7 @@ export const TravelForm = () => {
                       {['Backpacker', 'Budget', 'Moderate', 'Luxury', 'Ultra Luxury'].map(b => <option key={b} value={b}>{b}</option>)}
                     </select>
                   ) : (
-                    <div className="grid grid-cols-3 gap-4 bg-sand-50 dark:bg-charcoal-800 p-4 rounded-xl border border-sand-200 dark:border-charcoal-700 animate-slide-up">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-sand-50 dark:bg-charcoal-800 p-4 rounded-xl border border-sand-200 dark:border-charcoal-700 animate-slide-up">
                       <div>
                         <label className="text-[10px] font-bold text-charcoal-500 uppercase block mb-1">Max Flights</label>
                         <input type="number" name="flights" value={formData.budgetBreakdown?.flights} onChange={handleBudgetBreakdownChange} className="w-full bg-white dark:bg-charcoal-900 rounded-lg p-2 text-sm" placeholder="0" />
@@ -479,7 +479,7 @@ export const TravelForm = () => {
                   <svg className="w-4 h-4 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                   Pace
                 </label>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <RadioCard label="Chill" subLabel="Relaxed" value="Relaxed" groupValue={formData.activityLevel} onClick={() => handleSelection('activityLevel', 'Relaxed')} icon="☕" />
                   <RadioCard label="Balanced" subLabel="Medium" value="Moderate" groupValue={formData.activityLevel} onClick={() => handleSelection('activityLevel', 'Moderate')} icon="⚖️" />
                   <RadioCard label="Packed" subLabel="Fast" value="Fast Paced" groupValue={formData.activityLevel} onClick={() => handleSelection('activityLevel', 'Fast Paced')} icon="⚡" />

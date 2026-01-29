@@ -269,7 +269,7 @@ export const TripResult = () => {
                         </div>
 
                         {/* QUALITY SCORE & ACTIONS */}
-                        <div className="flex flex-col gap-4 items-end">
+                        <div className="flex flex-col gap-4 items-start lg:items-end w-full lg:w-auto">
                             {currentTripPlan.qualityScore && (
                                 <div className="flex items-center gap-4 bg-white dark:bg-charcoal-900 p-2 pr-6 rounded-full border border-sand-200 dark:border-charcoal-700 shadow-sm">
                                     <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg ${currentTripPlan.qualityScore.score >= 80 ? 'bg-green-500' :
@@ -317,7 +317,7 @@ export const TripResult = () => {
                                 </div>
                             )}
 
-                            <div className="flex gap-3">
+                            <div className="flex flex-wrap gap-3">
                                 <Button variant="outline" onClick={() => setShowShareModal(true)}>
                                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
                                     Share
@@ -376,7 +376,7 @@ export const TripResult = () => {
                                 <h3 className="text-red-800 dark:text-red-300 font-bold text-xs uppercase tracking-wide mb-2 flex items-center gap-2">
                                     <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span> Emergency
                                 </h3>
-                                <div className="grid grid-cols-3 gap-2 text-xs">
+                                <div className="flex flex-col sm:grid sm:grid-cols-3 gap-3 text-xs">
                                     <div>
                                         <span className="text-red-600 dark:text-red-300 block opacity-70">Police</span>
                                         <span className="font-bold text-red-900 dark:text-white">{currentTripPlan.emergencyInfo?.police}</span>
@@ -385,9 +385,9 @@ export const TripResult = () => {
                                         <span className="text-red-600 dark:text-red-300 block opacity-70">Ambulance</span>
                                         <span className="font-bold text-red-900 dark:text-white">{currentTripPlan.emergencyInfo?.ambulance}</span>
                                     </div>
-                                    <div>
+                                    <div className="sm:col-span-1">
                                         <span className="text-red-600 dark:text-red-300 block opacity-70">Help</span>
-                                        <span className="font-bold text-red-900 dark:text-white truncate">{currentTripPlan.emergencyInfo?.embassyHelp}</span>
+                                        <span className="font-bold text-red-900 dark:text-white break-words">{currentTripPlan.emergencyInfo?.embassyHelp}</span>
                                     </div>
                                 </div>
                             </div>

@@ -148,7 +148,7 @@ export const Services = () => {
                                 style={{ animationDelay: `${idx * 100}ms` }}
                             >
                                 <div className={`bg-gradient-to-r ${service.gradient} p-8 md:p-12`}>
-                                    <div className="flex items-center gap-6">
+                                    <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                                         <div className="text-6xl animate-float" style={{ animationDelay: `${idx * 150}ms` }}>
                                             {service.icon}
                                         </div>

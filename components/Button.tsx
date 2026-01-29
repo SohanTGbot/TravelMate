@@ -6,17 +6,17 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: 'sm' | 'md' | 'lg';
 }
 
-export const Button: React.FC<ButtonProps> = ({ 
-  children, 
-  variant = 'primary', 
-  className = '', 
-  isLoading = false, 
+export const Button: React.FC<ButtonProps> = ({
+  children,
+  variant = 'primary',
+  className = '',
+  isLoading = false,
   disabled,
   size = 'md',
-  ...props 
+  ...props
 }) => {
   const baseStyles = "relative font-medium transition-all duration-300 flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden group active:scale-[0.98]";
-  
+
   const sizeStyles = {
     sm: "px-4 py-1.5 text-xs rounded-lg",
     md: "px-6 py-2.5 text-sm rounded-xl",
@@ -32,7 +32,7 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   return (
-    <button 
+    <button
       className={`${baseStyles} ${sizeStyles[size]} ${variants[variant]} ${className}`}
       disabled={isLoading || disabled}
       {...props}
@@ -47,9 +47,9 @@ export const Button: React.FC<ButtonProps> = ({
         </>
       ) : (
         <>
-           {/* Ripple effect overlay */}
-           <span className="absolute inset-0 w-full h-full bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
-           {children}
+          {/* Ripple effect overlay */}
+          <span className="absolute inset-0 w-full h-full bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+          {children}
         </>
       )}
     </button>

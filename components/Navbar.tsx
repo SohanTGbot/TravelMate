@@ -32,9 +32,7 @@ export const Navbar = () => {
     navLinks.push({ name: 'My Trips', path: '/my-trips' });
   }
 
-  if (user?.role === 'admin') {
-    navLinks.push({ name: 'Admin', path: '/admin' });
-  }
+
 
   return (
     <>
@@ -140,6 +138,7 @@ export const Navbar = () => {
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="p-2 rounded-xl bg-white/50 dark:bg-charcoal-800/50 backdrop-blur-md text-charcoal-800 dark:text-sand-100"
+                aria-label={isMenuOpen ? "Close main menu" : "Open main menu"}
               >
                 {isMenuOpen ? (
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -155,101 +154,122 @@ export const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu Overlay */}
-        <div
-          className={`fixed inset-0 z-40 bg-charcoal-900/50 backdrop-blur-sm transition-opacity duration-300 md:hidden ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-            }`}
-          onClick={() => setIsMenuOpen(false)}
-        />
+      </nav>
 
-        {/* Mobile Menu Drawer */}
-        <div
-          className={`fixed top-0 right-0 z-50 w-3/4 max-w-sm h-full bg-white dark:bg-charcoal-900 shadow-2xl transition-transform duration-300 ease-out transform md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-            }`}
-        >
-          <div className="flex flex-col h-full overflow-y-auto">
-            <div className="p-6 flex justify-between items-center border-b border-sand-200 dark:border-charcoal-800">
-              <span className="text-xl font-display font-bold text-charcoal-900 dark:text-white">Menu</span>
-              <button
+      {/* Mobile Menu Overlay */}
+      <div
+        className={`fixed inset-0 z-[60] bg-charcoal-900/50 backdrop-blur-sm transition-opacity duration-300 md:hidden ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
+        onClick={() => setIsMenuOpen(false)}
+      />
+
+      {/* Mobile Menu Drawer */}
+      <div
+        className={`fixed top-0 right-0 z-[70] w-3/4 max-w-sm h-full bg-white dark:bg-charcoal-900 shadow-2xl transition-transform duration-300 ease-out transform md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+      >
+        <div className="flex flex-col h-full overflow-y-auto">
+          <div className="p-6 flex justify-between items-center border-b border-sand-200 dark:border-charcoal-800">
+            <span className="text-xl font-display font-bold text-charcoal-900 dark:text-white">Menu</span>
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              className="p-2 rounded-full hover:bg-sand-100 dark:hover:bg-charcoal-800 text-charcoal-500 dark:text-sand-400"
+              aria-label="Close menu"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <div className="p-6 flex-grow space-y-2">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.path}
                 onClick={() => setIsMenuOpen(false)}
-                className="p-2 rounded-full hover:bg-sand-100 dark:hover:bg-charcoal-800 text-charcoal-500 dark:text-sand-400"
+                className={`block px-4 py-3 rounded-xl text-lg font-medium transition-all ${location.pathname === link.path
+                  ? 'bg-forest-50 dark:bg-forest-900/20 text-forest-700 dark:text-forest-200'
+                  : 'text-charcoal-600 dark:text-sand-300 hover:bg-sand-50 dark:hover:bg-charcoal-800'
+                  }`}
               >
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
+                {link.name}
+              </Link>
+            ))}
 
-            <div className="p-6 flex-grow space-y-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`block px-4 py-3 rounded-xl text-lg font-medium transition-all ${location.pathname === link.path
-                    ? 'bg-forest-50 dark:bg-forest-900/20 text-forest-700 dark:text-forest-200'
-                    : 'text-charcoal-600 dark:text-sand-300 hover:bg-sand-50 dark:hover:bg-charcoal-800'
-                    }`}
-                >
-                  {link.name}
+            {/* Plan Trip CTA for Mobile */}
+            <Link
+              to="/plan"
+              onClick={() => setIsMenuOpen(false)}
+              className="block px-4 py-3 rounded-xl text-lg font-bold text-forest-700 dark:text-forest-400 bg-forest-50/50 dark:bg-forest-900/10 hover:bg-forest-100 dark:hover:bg-forest-900/30 transition-all mt-2"
+            >
+              ✨ Plan a Trip
+            </Link>
+
+            {user?.role === 'admin' && (
+              <Link
+                to="/admin"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-4 py-3 rounded-xl text-lg font-bold text-charcoal-600 dark:text-charcoal-400 hover:bg-sand-50 dark:hover:bg-charcoal-800 transition-all mt-1"
+              >
+                🛡️ Admin Panel
+              </Link>
+            )}
+
+            <div className="my-4 border-t border-sand-200 dark:border-charcoal-800"></div>
+
+            {!user ? (
+              <div className="space-y-3">
+                <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                  <Button variant="outline" className="w-full justify-center">Log In</Button>
                 </Link>
-              ))}
-
-              <div className="my-4 border-t border-sand-200 dark:border-charcoal-800"></div>
-
-              {!user ? (
-                <div className="space-y-3">
-                  <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                    <Button variant="outline" className="w-full justify-center">Log In</Button>
-                  </Link>
-                  <Link to="/register" onClick={() => setIsMenuOpen(false)}>
-                    <Button variant="primary" className="w-full justify-center">Sign Up Free</Button>
-                  </Link>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3 px-4 py-2">
-                    <div className="w-10 h-10 rounded-full bg-forest-600 text-white flex items-center justify-center font-bold">
-                      {user.avatar_url ? (
-                        <img src={user.avatar_url} alt={user.name} className="w-full h-full object-cover rounded-full" />
-                      ) : (
-                        user.name.charAt(0)
-                      )}
-                    </div>
-                    <div>
-                      <div className="font-bold text-charcoal-900 dark:text-white">{user.name}</div>
-                      <div className="text-xs text-charcoal-500 dark:text-charcoal-400 truncate max-w-[150px]">{user.email}</div>
-                    </div>
-                  </div>
-                  <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
-                    <Button variant="outline" className="w-full justify-center">View Profile</Button>
-                  </Link>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-center text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
-                    onClick={() => { logout(); setIsMenuOpen(false); }}
-                  >
-                    Log Out
-                  </Button>
-                </div>
-              )}
-            </div>
-
-            <div className="p-6 border-t border-sand-200 dark:border-charcoal-800">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-charcoal-500 dark:text-charcoal-400">Appearance</span>
-                <button
-                  onClick={toggleTheme}
-                  className="p-3 rounded-full bg-sand-100 dark:bg-charcoal-800 text-charcoal-700 dark:text-sand-200 transition-colors"
-                  aria-label="Toggle Theme"
-                >
-                  {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
-                </button>
+                <Link to="/register" onClick={() => setIsMenuOpen(false)}>
+                  <Button variant="primary" className="w-full justify-center">Sign Up Free</Button>
+                </Link>
               </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 px-4 py-2">
+                  <div className="w-10 h-10 rounded-full bg-forest-600 text-white flex items-center justify-center font-bold">
+                    {user.avatar_url ? (
+                      <img src={user.avatar_url} alt={user.name} className="w-full h-full object-cover rounded-full" />
+                    ) : (
+                      user.name.charAt(0)
+                    )}
+                  </div>
+                  <div>
+                    <div className="font-bold text-charcoal-900 dark:text-white">{user.name}</div>
+                    <div className="text-xs text-charcoal-500 dark:text-charcoal-400 truncate max-w-[150px]">{user.email}</div>
+                  </div>
+                </div>
+                <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
+                  <Button variant="outline" className="w-full justify-center">View Profile</Button>
+                </Link>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-center text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
+                  onClick={() => { logout(); setIsMenuOpen(false); }}
+                >
+                  Log Out
+                </Button>
+              </div>
+            )}
+          </div>
+
+          <div className="p-6 border-t border-sand-200 dark:border-charcoal-800">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-charcoal-500 dark:text-charcoal-400">Appearance</span>
+              <button
+                onClick={toggleTheme}
+                className="p-3 rounded-full bg-sand-100 dark:bg-charcoal-800 text-charcoal-700 dark:text-sand-200 transition-colors"
+                aria-label="Toggle Theme"
+              >
+                {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
+              </button>
             </div>
           </div>
         </div>
-      </nav>
+      </div>
     </>
   );
 };
