@@ -116,25 +116,7 @@ export const Home = () => {
           </div>
         </div>
 
-        {/* Floating Glass Cards Decoration */}
-        <div className="absolute bottom-10 w-full px-4 overflow-hidden pointer-events-none hidden md:block">
-          <div className="max-w-7xl mx-auto relative h-20">
-            <div className="absolute right-0 bottom-10 bg-white/10 backdrop-blur-xl border border-white/20 p-4 rounded-2xl shadow-2xl flex items-center gap-4 animate-float">
-              <div className="w-12 h-12 rounded-xl bg-forest-500/80 flex items-center justify-center text-2xl">🗻</div>
-              <div className="text-left">
-                <p className="text-white font-bold text-sm">Kyoto, Japan</p>
-                <p className="text-forest-200 text-xs">Trending now</p>
-              </div>
-            </div>
-            <div className="absolute left-0 bottom-20 bg-white/10 backdrop-blur-xl border border-white/20 p-4 rounded-2xl shadow-2xl flex items-center gap-4 animate-float-delayed">
-              <div className="w-12 h-12 rounded-xl bg-clay-500/80 flex items-center justify-center text-2xl">🏜️</div>
-              <div className="text-left">
-                <p className="text-white font-bold text-sm">Petra, Jordan</p>
-                <p className="text-clay-200 text-xs">Adventure awaiting</p>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </section>
 
       {/* ----------------- HOW IT WORKS ----------------- */}

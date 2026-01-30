@@ -55,7 +55,7 @@ export const Navbar = () => {
             </Link>
 
             {/* Desktop Nav */}
-            <div className="hidden md:flex items-center space-x-1 bg-white/40 dark:bg-charcoal-800/40 backdrop-blur-md px-2 py-1.5 rounded-full border border-white/20 dark:border-white/5 shadow-sm">
+            <div className="hidden xl:flex items-center space-x-1 bg-white/40 dark:bg-charcoal-800/40 backdrop-blur-md px-2 py-1.5 rounded-full border border-white/20 dark:border-white/5 shadow-sm">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.path;
                 return (
@@ -75,7 +75,7 @@ export const Navbar = () => {
 
 
             {/* Actions */}
-            <div className="hidden md:flex items-center gap-4">
+            <div className="hidden xl:flex items-center gap-4">
 
               <button
                 onClick={toggleTheme}
@@ -135,7 +135,7 @@ export const Navbar = () => {
             </div>
 
             {/* Mobile menu button */}
-            <div className="md:hidden flex items-center gap-4">
+            <div className="xl:hidden flex items-center gap-4">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="p-2 rounded-xl bg-white/50 dark:bg-charcoal-800/50 backdrop-blur-md text-charcoal-800 dark:text-sand-100"
@@ -159,14 +159,14 @@ export const Navbar = () => {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 z-[60] bg-charcoal-900/50 backdrop-blur-sm transition-opacity duration-300 md:hidden ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        className={`fixed inset-0 z-[60] bg-charcoal-900/50 backdrop-blur-sm transition-opacity duration-300 xl:hidden ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}
         onClick={() => setIsMenuOpen(false)}
       />
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`fixed top-0 right-0 z-[70] w-4/5 max-w-sm h-full bg-white/95 dark:bg-charcoal-900/95 backdrop-blur-xl shadow-2xl transition-transform duration-300 ease-out transform md:hidden border-l border-white/20 dark:border-white/5 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed top-0 right-0 z-[70] w-4/5 max-w-sm h-full bg-white/95 dark:bg-charcoal-900/95 backdrop-blur-xl shadow-2xl transition-transform duration-300 ease-out transform xl:hidden border-l border-white/20 dark:border-white/5 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
         <div className="flex flex-col h-full overflow-y-auto">

@@ -45,6 +45,36 @@ export const Profile = () => {
   // Active tab
   const [activeTab, setActiveTab] = useState<'overview' | 'security' | 'documents' | 'preferences' | 'achievements'>('overview');
 
+  // Member Duration Ticker
+  const [memberDuration, setMemberDuration] = useState('');
+
+  useEffect(() => {
+    if (!user?.createdAt) return;
+
+    const updateDuration = () => {
+      const start = new Date(user.createdAt).getTime();
+      const now = new Date().getTime();
+      const diff = now - start;
+
+      if (diff < 0) {
+        setMemberDuration('Just joined');
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      setMemberDuration(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+    };
+
+    updateDuration();
+    const timer = setInterval(updateDuration, 1000);
+
+    return () => clearInterval(timer);
+  }, [user]);
+
 
   useEffect(() => {
     if (!isLoadingAuth && !user) {
@@ -351,19 +381,23 @@ export const Profile = () => {
 
           {/* Tabs Navigation */}
           <div className="mb-8 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-            <div className="bg-white dark:bg-charcoal-900 rounded-[2rem] p-2 shadow-lg border border-sand-200 dark:border-charcoal-700">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <div className="bg-white/80 dark:bg-charcoal-900/80 backdrop-blur-xl rounded-[2.5rem] p-3 shadow-2xl border border-white/20 dark:border-charcoal-600/30 ring-1 ring-black/5 mx-auto max-w-5xl">
+              <div className="flex flex-wrap justify-center gap-2 md:gap-4">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as any)}
-                    className={`px-6 py-3 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 ${activeTab === tab.id
-                      ? 'bg-gradient-to-r from-forest-500 to-forest-700 text-white shadow-lg scale-105'
-                      : 'text-charcoal-600 dark:text-sand-300 hover:bg-sand-50 dark:hover:bg-charcoal-800'
-                      }`}
+                    className={`
+                      relative group px-6 py-3.5 rounded-2xl font-bold transition-all duration-300 flex items-center justify-center gap-2.5
+                      flex-1 sm:flex-none min-w-[110px] sm:min-w-fit
+                      ${activeTab === tab.id
+                        ? 'bg-gradient-to-br from-forest-600 to-emerald-600 text-white shadow-lg shadow-forest-500/30 scale-105 ring-2 ring-forest-500/20'
+                        : 'bg-transparent text-charcoal-600 dark:text-sand-300 hover:bg-charcoal-900/5 dark:hover:bg-white/10 hover:scale-105'
+                      }
+                    `}
                   >
-                    <span className="text-xl">{tab.icon}</span>
-                    <span className="hidden sm:inline">{tab.label}</span>
+                    <span className={`text-xl transition-transform duration-300 ${activeTab === tab.id ? 'scale-110' : 'group-hover:rotate-12'}`}>{tab.icon}</span>
+                    <span className={`text-sm md:text-base whitespace-nowrap ${activeTab === tab.id ? 'font-black tracking-wide' : 'font-medium'}`}>{tab.label}</span>
                   </button>
                 ))}
               </div>
@@ -382,9 +416,11 @@ export const Profile = () => {
                   </h2>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center p-4 bg-sand-50 dark:bg-charcoal-800 rounded-xl">
-                      <span className="text-charcoal-600 dark:text-sand-300">Member Since</span>
+                      <span className="text-charcoal-600 dark:text-sand-300">Journey Duration with TravelMate</span>
                       <span className="font-bold text-charcoal-900 dark:text-white">
-                        {new Date(user.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                        <span className="font-bold font-mono text-lg text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600 dark:from-violet-400 dark:to-indigo-400">
+                          {memberDuration || "Loading..."}
+                        </span>
                       </span>
                     </div>
                     <div className="flex justify-between items-center p-4 bg-sand-50 dark:bg-charcoal-800 rounded-xl">
