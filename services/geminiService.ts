@@ -60,7 +60,7 @@ export const generateTripPlan = async (request: TripRequest): Promise<TripPlan> 
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-flash-latest',
       contents: prompt,
       config: {
         systemInstruction: "You are an expert travel planner AI. You provide concrete, logistical travel details, not just vague suggestions. You always response in valid JSON.",
@@ -265,7 +265,7 @@ export const chatWithTripAssistant = async (currentPlan: any, userInstruction: s
     `;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-flash-latest',
       contents: prompt,
       config: {
         responseMimeType: 'application/json'
